@@ -1,0 +1,18 @@
+{
+  "modloader": {
+    "name": "MelonLoader",
+    "version": "0.6.6",
+    "download_url": "https://github.com/LavaGang/MelonLoader/releases/download/v0.6.6/MelonLoader.x64.zip",
+    "sha256": "687b82605606e941cefdc007b880b720922cc319bb70270064590d4038c3c0db"
+  },
+  "mods": [
+    {
+      "id": "skin-switcher",
+      "name": "Skin Switcher",
+      "version": "1.0.0",
+      "file_name": "SkinSwitcher.dll",
+      "download_url": "",
+      "sha256": ""
+    }
+  ]
+}
