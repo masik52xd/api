@@ -12,7 +12,9 @@
       "version": "1.0.0",
       "file_name": "SkinSwitcher.dll",
       "download_url": "",
-      "sha256": ""
+      "sha256": "",
+      "description": "Зміна скінів клієнта",
+      "author": "mwkdev"
     }
   ]
 }
