@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Havoc Rebirth — Changelogs & MakeIt Hub</title>
+<meta name="description" content="Офіційні патчноути, новини та каталог верифікованих модів для Havoc Rebirth і MakeIt Launcher.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
+
+  :root {
+    --bg: #070a10;
+    --bg-card: rgba(14, 20, 31, 0.78);
+    --bg-card-hover: rgba(20, 28, 43, 0.9);
+    --border: rgba(148, 163, 184, 0.14);
+    --border-hi: rgba(92, 162, 255, 0.42);
+    --accent: #3588ff;
+    --accent-hi: #66adff;
+    --accent-dim: rgba(53, 136, 255, 0.14);
+    --accent-glow: rgba(53, 136, 255, 0.35);
+    --green: #3be389;
+    --green-dim: rgba(59, 227, 137, 0.14);
+    --amber: #f7bd55;
+    --amber-dim: rgba(247, 189, 85, 0.14);
+    --purple: #c084fc;
+    --purple-dim: rgba(192, 132, 252, 0.14);
+    --red: #ff6b6b;
+    --red-dim: rgba(255, 107, 107, 0.14);
+    --text: #f3f7fc;
+    --text2: #9baac0;
+    --text3: #64758d;
+    --display: 'Rajdhani', system-ui, sans-serif;
+    --ui: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.6 var(--ui);
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Atmospheric backdrop */
+  .backdrop {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(900px 500px at 82% -5%, rgba(53, 136, 255, 0.22), transparent 65%),
+      radial-gradient(700px 450px at 8% 90%, rgba(16, 124, 16, 0.12), transparent 65%);
+  }
+  .backdrop-art {
+    position: fixed; top: 0; left: 0; right: 0; height: 520px; pointer-events: none; z-index: 0;
+    background: url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2149290/header.jpg?t=1758304707') center 20% / cover no-repeat;
+    filter: blur(36px) saturate(135%) brightness(0.35);
+    transform: scale(1.1);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.4) 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.4) 55%, transparent 100%);
+  }
+  .backdrop-grid {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 0%, transparent 80%);
+  }
+
+  .wrap { position: relative; z-index: 1; max-width: 1140px; margin: 0 auto; padding: 0 24px 72px; }
+
+  /* Topbar */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    background: rgba(7, 10, 16, 0.78);
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-inner {
+    max-width: 1140px; margin: 0 auto; padding: 12px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }
+  .brand-mark { font: 700 20px/1 var(--display); letter-spacing: 2.5px; text-transform: uppercase; }
+  .brand-mark span { color: var(--accent-hi); }
+  .ver-pill {
+    font: 600 11px var(--mono); color: var(--accent-hi);
+    background: var(--accent-dim); border: 1px solid var(--border-hi);
+    padding: 3px 9px; border-radius: 6px;
+  }
+  .nav-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 15px; border-radius: 10px; border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.04); color: var(--text2);
+    font: 500 13px var(--ui); text-decoration: none; cursor: pointer;
+    transition: all .18s ease;
+  }
+  .btn:hover { color: #fff; border-color: rgba(148, 163, 184, 0.35); background: rgba(255, 255, 255, 0.08); }
+  .btn-primary {
+    border: none; color: #fff;
+    background: linear-gradient(135deg, var(--accent-hi), #1c57c4);
+    font: 700 14px var(--display); letter-spacing: 1px; text-transform: uppercase;
+    padding: 9px 18px; box-shadow: 0 8px 24px rgba(53, 136, 255, 0.25);
+  }
+  .btn-primary:hover { filter: brightness(1.1); box-shadow: 0 10px 28px var(--accent-glow); transform: translateY(-1px); }
+
+  /* Hero */
+  .hero {
+    margin-top: 28px;
+    padding: 28px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, rgba(16, 24, 38, 0.88), rgba(9, 13, 22, 0.92));
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45), inset 0 1px rgba(255,255,255,0.06);
+    display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; align-items: center;
+  }
+  .hero-eyebrow { font: 600 11px var(--mono); letter-spacing: 1.8px; text-transform: uppercase; color: var(--accent-hi); margin-bottom: 8px; }
+  .hero h1 { font: 700 44px/0.98 var(--display); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+  .hero h1 span { color: var(--accent-hi); }
+  .hero-desc { color: var(--text2); max-width: 560px; font-size: 14.5px; margin-bottom: 18px; }
+
+  .hero-stats { display: flex; gap: 22px; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid var(--border); }
+  .stat-item b { display: block; font: 700 22px var(--display); color: #fff; }
+  .stat-item span { font: 11px var(--mono); color: var(--text3); text-transform: uppercase; letter-spacing: .8px; }
+
+  .poster-card {
+    border-radius: 14px; overflow: hidden; border: 1px solid var(--border);
+    background: #0b1019; position: relative;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.5);
+  }
+  .poster-card img { display: block; width: 100%; aspect-ratio: 460 / 215; object-fit: cover; }
+  .poster-foot {
+    padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    background: rgba(9, 13, 21, 0.95); border-top: 1px solid var(--border);
+  }
+  .poster-foot div { font: 12px var(--mono); color: var(--text2); }
+  .poster-foot b { color: var(--green); font-weight: 600; }
+
+  /* Layout */
+  .grid { margin-top: 28px; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 26px; align-items: start; }
+
+  /* Controls */
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+  .search {
+    flex: 1; min-width: 200px; padding: 9px 14px; border-radius: 10px;
+    background: rgba(11, 16, 25, 0.85); border: 1px solid var(--border);
+    color: var(--text); font: 13px var(--mono); outline: none; transition: border-color .18s;
+  }
+  .search:focus { border-color: var(--accent-hi); }
+  .pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pill {
+    padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); color: var(--text2);
+    font: 600 11.5px var(--mono); text-transform: uppercase; cursor: pointer; transition: all .16s;
+  }
+  .pill:hover { color: #fff; border-color: rgba(148,163,184,0.35); }
+  .pill.active { background: var(--accent-dim); border-color: var(--border-hi); color: #fff; }
+
+  /* Feed cards */
+  .feed { display: flex; flex-direction: column; gap: 14px; }
+  .post {
+    background: var(--bg-card); backdrop-filter: blur(12px);
+    border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+    position: relative; scroll-margin-top: 82px;
+  }
+  .post:hover { border-color: rgba(148, 163, 184, 0.28); }
+  .post.pinned { border-color: rgba(53, 136, 255, 0.4); }
+  .post.pinned::before {
+    content: ''; position: absolute; top: 0; left: 20px; right: 20px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-hi), transparent);
+  }
+  .post.highlight {
+    border-color: var(--accent-hi);
+    box-shadow: 0 0 0 3px var(--accent-dim), 0 18px 46px rgba(0,0,0,0.55);
+    animation: pulseGlow 1.8s ease;
+  }
+  @keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 var(--accent-glow); }
+    40% { box-shadow: 0 0 0 8px var(--accent-dim); }
+    100% { box-shadow: 0 0 0 3px var(--accent-dim); }
+  }
+
+  .post-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  .post-badges { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+  .tag {
+    font: 700 10px var(--mono); letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 5px;
+  }
+  .tag-patch { background: var(--accent-dim); color: var(--accent-hi); }
+  .tag-update { background: var(--green-dim); color: var(--green); }
+  .tag-event { background: var(--amber-dim); color: var(--amber); }
+  .tag-info { background: var(--purple-dim); color: var(--purple); }
+  .tag-pin { background: rgba(255,255,255,0.08); color: #fff; }
+  .post-date { font: 12px var(--mono); color: var(--text3); }
+
+  .post h2 { font: 700 22px/1.2 var(--display); letter-spacing: .5px; margin-bottom: 8px; }
+  .post-body { color: var(--text2); font-size: 14.5px; white-space: pre-line; }
+  .post-details { margin-top: 12px; color: var(--text2); font-size: 14px; padding-top: 12px; border-top: 1px dashed var(--border); white-space: pre-line; }
+
+  .changes { list-style: none; margin-top: 14px; display: flex; flex-direction: column; gap: 7px; }
+  .changes li {
+    display: flex; align-items: flex-start; gap: 9px; font-size: 13.5px; color: var(--text);
+    background: rgba(255,255,255,0.025); padding: 7px 11px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.04);
+  }
+  .chg-badge {
+    font: 700 10px var(--mono); text-transform: uppercase; padding: 2px 6px; border-radius: 4px; flex-shrink: 0; margin-top: 2px;
+  }
+  .chg-add { background: var(--green-dim); color: var(--green); }
+  .chg-fix { background: var(--amber-dim); color: var(--amber); }
+  .chg-rem { background: var(--red-dim); color: var(--red); }
+  .chg-upd { background: var(--accent-dim); color: var(--accent-hi); }
+
+  .post-img { margin-top: 14px; width: 100%; border-radius: 10px; border: 1px solid var(--border); display: block; }
+  .post-foot { margin-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .post-link-btn {
+    background: transparent; border: 1px solid var(--border); color: var(--text3);
+    font: 11px var(--mono); padding: 4px 10px; border-radius: 6px; cursor: pointer; transition: all .15s;
+  }
+  .post-link-btn:hover { color: #fff; border-color: var(--border-hi); }
+
+  /* Sidebar */
+  .side { display: flex; flex-direction: column; gap: 16px; }
+  .panel {
+    background: var(--bg-card); backdrop-filter: blur(12px);
+    border: 1px solid var(--border); border-radius: 16px; padding: 18px;
+  }
+  .panel-title {
+    font: 700 12px var(--mono); letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3);
+    margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .mod-list { display: flex; flex-direction: column; gap: 10px; }
+  .mod-item {
+    padding: 11px 12px; border-radius: 11px; background: rgba(255,255,255,0.025);
+    border: 1px solid var(--border);
+  }
+  .mod-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px; }
+  .mod-top b { font: 700 15px var(--display); letter-spacing: .4px; }
+  .mod-ver { font: 600 10.5px var(--mono); color: var(--accent-hi); background: var(--accent-dim); padding: 2px 7px; border-radius: 5px; }
+  .mod-desc { font-size: 12.5px; color: var(--text2); line-height: 1.45; }
+  .mod-sha {
+    margin-top: 7px; font: 10.5px var(--mono); color: var(--text3);
+    display: flex; align-items: center; justify-content: space-between; gap: 6px;
+  }
+  .copy-mini {
+    background: none; border: none; color: var(--accent-hi); font: 10.5px var(--mono); cursor: pointer;
+  }
+  .copy-mini:hover { text-decoration: underline; }
+
+  .steps { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: var(--text2); }
+  .steps li { display: flex; gap: 10px; align-items: flex-start; }
+  .step-n {
+    width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+    background: var(--accent-dim); color: var(--accent-hi); font: 700 11px var(--mono);
+    display: grid; place-items: center;
+  }
+
+  .empty { padding: 28px; text-align: center; color: var(--text3); font: 13px var(--mono); border: 1px dashed var(--border); border-radius: 14px; }
+  footer { margin-top: 42px; padding-top: 18px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font: 12px var(--mono); color: var(--text3); }
+  footer a { color: var(--text2); text-decoration: none; }
+  footer a:hover { color: #fff; }
+
+  @media (max-width: 900px) {
+    .hero, .grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+  <div class="backdrop"></div>
+  <div class="backdrop-art"></div>
+  <div class="backdrop-grid"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="https://mwkdev.pp.ua/">
+        <span class="brand-mark">HAVOC <span>REBIRTH</span></span>
+        <span class="ver-pill" id="top-ver">MakeIt Hub</span>
+      </a>
+      <div class="nav-actions">
+        <a class="btn" href="https://mwkdev.pp.ua/">← На портфоліо</a>
+        <a class="btn" href="https://github.com/masik52xd" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-primary" id="top-dl" href="https://github.com/masik52xd" target="_blank" rel="noopener">Завантажити лаунчер</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <div class="hero-eyebrow">// OFFICIAL MAKEIT CHANGELOGS &amp; MODS</div>
+        <h1>Патчноути <span>Havoc Rebirth</span></h1>
+        <p class="hero-desc">
+          Усі оновлення лаунчера, нових модів для MelonLoader, кастомних мап і турнірних фіч в одному місці. Перевірено за SHA-256.
+        </p>
+        <div class="hero-stats">
+          <div class="stat-item"><b id="st-ver">—</b><span>Лаунчер</span></div>
+          <div class="stat-item"><b id="st-mods">—</b><span>Модів у каталозі</span></div>
+          <div class="stat-item"><b id="st-posts">—</b><span>Записів оновлень</span></div>
+        </div>
+      </div>
+
+      <div class="poster-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2149290/header.jpg?t=1758304707" alt="Havoc" onerror="this.style.display='none'">
+        <div class="poster-foot">
+          <div>Статус: <b>Online · SHA-256</b></div>
+          <a class="copy-mini" id="copy-sha-launcher" href="#" hidden>Копіювати SHA-256</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div>
+        <div class="controls">
+          <input id="search" class="search" type="search" placeholder="Пошук по чейнджлогах...">
+          <div class="pills" id="filters">
+            <button class="pill active" data-tag="all">Усі</button>
+            <button class="pill" data-tag="update">Update</button>
+            <button class="pill" data-tag="patch">Patch</button>
+            <button class="pill" data-tag="event">Event</button>
+            <button class="pill" data-tag="info">Info</button>
+          </div>
+        </div>
+        <div class="feed" id="feed">
+          <div class="empty">Завантаження новин з news.json...</div>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="panel">
+          <div class="panel-title"><span>Доступні моди</span><span id="ml-ver">MelonLoader</span></div>
+          <div class="mod-list" id="mod-list">
+            <div class="empty">Завантаження manifest.json...</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title"><span>Як почати</span></div>
+          <ul class="steps">
+            <li><span class="step-n">1</span><span>Завантаж останній реліз <b>Havoc Launcher</b> та обери папку з <code>Havoc.exe</code>.</span></li>
+            <li><span class="step-n">2</span><span>Встанови <b>MelonLoader</b> і потрібні моди в 1 клік прямо з каталогу.</span></li>
+            <li><span class="step-n">3</span><span>Перемикайся між <b>Vanilla</b> та <b>Auto + Mods</b> без втрати налаштувань.</span></li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      <span>© 2026 Masik · MakeIt Community</span>
+      <span>Дані завантажуються напряму з <a href="./news.json">news.json</a> та <a href="./manifest.json">manifest.json</a></span>
+    </footer>
+  </main>
+
+<script>
+'use strict';
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const slugify = s => String(s || '').toLowerCase().replace(/[^a-z0-9а-яіїєґ]+/gi, '-').replace(/^-|-$/g, '') || 'post';
+
+let allNews = [];
+let activeTag = 'all';
+
+function parseChangeItem(c) {
+  if (typeof c === 'string') {
+    const m = c.match(/^(\+|added|new|fix|fixed|!|changed|~|removed|-)\s*[:\-]?\s*(.+)$/i);
+    if (!m) return { cls: 'chg-upd', badge: 'UPD', text: c };
+    const k = m[1].toLowerCase();
+    if (k === '+' || k === 'added' || k === 'new') return { cls: 'chg-add', badge: 'NEW', text: m[2] };
+    if (k === 'fix' || k === 'fixed' || k === '!') return { cls: 'chg-fix', badge: 'FIX', text: m[2] };
+    if (k === 'removed' || k === '-') return { cls: 'chg-rem', badge: 'DEL', text: m[2] };
+    return { cls: 'chg-upd', badge: 'UPD', text: m[2] };
+  }
+  const type = String(c?.type || 'upd').toLowerCase();
+  const map = {
+    added: ['chg-add', 'NEW'], new: ['chg-add', 'NEW'],
+    fixed: ['chg-fix', 'FIX'], fix: ['chg-fix', 'FIX'],
+    removed: ['chg-rem', 'DEL'],
+  };
+  const [cls, badge] = map[type] || ['chg-upd', 'UPD'];
+  return { cls, badge, text: String(c?.text || '') };
+}
+
+function renderFeed() {
+  const feed = document.getElementById('feed');
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const items = allNews.filter(n => {
+    const tag = (n.tag || 'info').toLowerCase();
+    if (activeTag !== 'all' && tag !== activeTag) return false;
+    if (!q) return true;
+    const hay = `${n.title || ''} ${n.body || ''} ${n.details || ''} ${(n.changes || []).map(x => x.text || x).join(' ')}`.toLowerCase();
+    return hay.includes(q);
+  });
+
+  if (!items.length) {
+    feed.innerHTML = '<div class="empty">За вашим запитом записів не знайдено.</div>';
+    return;
+  }
+
+  feed.innerHTML = items.map(n => {
+    const known = ['patch', 'update', 'event', 'info'];
+    const tag = known.includes((n.tag || '').toLowerCase()) ? n.tag.toLowerCase() : 'info';
+    const postId = n._slug;
+    const changesHtml = Array.isArray(n.changes) && n.changes.length
+      ? `<ul class="changes">${n.changes.map(c => {
+          const item = parseChangeItem(c);
+          return `<li><span class="chg-badge ${item.cls}">${item.badge}</span><span>${esc(item.text)}</span></li>`;
+        }).join('')}</ul>`
+      : '';
+    const detailsHtml = n.details ? `<div class="post-details">${esc(n.details)}</div>` : '';
+    const imgHtml = n.image ? `<img class="post-img" src="${esc(n.image)}" alt="" loading="lazy">` : '';
+
+    return `
+      <article class="post ${n.pinned ? 'pinned' : ''}" id="${esc(postId)}">
+        <div class="post-head">
+          <div class="post-badges">
+            <span class="tag tag-${tag}">${esc(tag)}</span>
+            ${n.version ? `<span class="ver-pill">${esc(n.version)}</span>` : ''}
+            ${n.pinned ? '<span class="tag tag-pin">PINNED</span>' : ''}
+          </div>
+          <span class="post-date">${esc(n.date || '')}</span>
+        </div>
+        <h2>${esc(n.title || 'Без назви')}</h2>
+        <div class="post-body">${esc(n.body || '')}</div>
+        ${detailsHtml}
+        ${changesHtml}
+        ${imgHtml}
+        <div class="post-foot">
+          <button class="post-link-btn" data-copy-id="${esc(postId)}">🔗 Посилання на пост</button>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  feed.querySelectorAll('[data-copy-id]').forEach(btn => {
+    btn.onclick = async () => {
+      const url = `${location.origin}${location.pathname}#${btn.dataset.copyId}`;
+      try { await navigator.clipboard.writeText(url); btn.textContent = '✓ Скопійовано'; setTimeout(() => btn.textContent = '🔗 Посилання на пост', 1800); }
+      catch { location.hash = btn.dataset.copyId; }
+    };
+  });
+
+  highlightFromHash();
+}
+
+function highlightFromHash() {
+  const hash = decodeURIComponent(location.hash.replace(/^#/, '')).trim();
+  if (!hash) return;
+  const el = document.getElementById(hash);
+  if (!el) return;
+  el.classList.remove('highlight');
+  void el.offsetWidth;
+  el.classList.add('highlight');
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function init() {
+  try {
+    const [nr, mr] = await Promise.all([
+      fetch('./news.json', { cache: 'no-cache' }),
+      fetch('./manifest.json', { cache: 'no-cache' }),
+    ]);
+
+    if (nr.ok) {
+      const raw = await nr.json();
+      const list = Array.isArray(raw) ? raw : (raw.news || raw.items || []);
+      allNews = list
+        .map((n, i) => ({ ...n, _slug: String(n.id || n.version || slugify(n.title) || ('post-' + i)) }))
+        .sort((a, b) => (b.pinned | 0) - (a.pinned | 0) || String(b.date || '').localeCompare(String(a.date || '')));
+      document.getElementById('st-posts').textContent = allNews.length;
+      renderFeed();
+    } else {
+      document.getElementById('feed').innerHTML = '<div class="empty">Не вдалося завантажити news.json</div>';
+    }
+
+    if (mr.ok) {
+      const mf = await mr.json();
+      const ln = mf.launcher || {};
+      const ver = ln.version ? 'v' + String(ln.version).replace(/^v/i, '') : 'Beta';
+      document.getElementById('top-ver').textContent = ver;
+      document.getElementById('st-ver').textContent = ver;
+
+      if (ln.download_url) document.getElementById('top-dl').href = ln.download_url;
+      if (ln.sha256) {
+        const shaBtn = document.getElementById('copy-sha-launcher');
+        shaBtn.hidden = false;
+        shaBtn.onclick = async e => {
+          e.preventDefault();
+          await navigator.clipboard.writeText(ln.sha256);
+          shaBtn.textContent = '✓ SHA-256 скопійовано';
+          setTimeout(() => shaBtn.textContent = 'Копіювати SHA-256', 2000);
+        };
+      }
+
+      const publicMods = (mf.mods || []).filter(m => (m.access || 'public') !== 'admin');
+      document.getElementById('st-mods').textContent = publicMods.length;
+      document.getElementById('mod-list').innerHTML = publicMods.length
+        ? publicMods.map(m => `
+            <div class="mod-item">
+              <div class="mod-top">
+                <b>${esc(m.name || m.id)}</b>
+                <span class="mod-ver">v${esc(m.version || '?')}</span>
+              </div>
+              <div class="mod-desc">${esc(m.description || '')}</div>
+              <div class="mod-sha">
+                <span>${esc(m.author || 'Havoc Community')}</span>
+                <span>${m.sha256 ? esc(m.sha256.slice(0, 10)) + '…' : '—'}</span>
+              </div>
+            </div>
+          `).join('')
+        : '<div class="empty">Каталог порожній</div>';
+    }
+  } catch (e) {
+    document.getElementById('feed').innerHTML = '<div class="empty">Помилка завантаження даних.</div>';
+  }
+}
+
+document.getElementById('filters').addEventListener('click', e => {
+  const b = e.target.closest('.pill');
+  if (!b) return;
+  activeTag = b.dataset.tag;
+  document.querySelectorAll('#filters .pill').forEach(x => x.classList.toggle('active', x === b));
+  renderFeed();
+});
+document.getElementById('search').addEventListener('input', renderFeed);
+window.addEventListener('hashchange', highlightFromHash);
+init();
+</script>
+</body>
+</html>
