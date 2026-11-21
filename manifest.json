@@ -8,6 +8,12 @@
   "beta_discord_ids": [
     "1056138399624470578"
   ],
+  "launcher": {
+  "version": "0.1.0-beta",
+  "download_url": "https://mwkdev.pp.ua/downloads/HavocLauncher-Setup-0.1.0-beta.exe",
+  "sha256": "fe57db2dda634c8f685e9d9e119a6943bd9dc4e8700d08af6c294bc70a923796",
+  "changelog": "..."
+  },
   "modloader": {
     "name": "MelonLoader",
     "version": "0.6.6",
