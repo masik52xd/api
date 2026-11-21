@@ -3,25 +3,11 @@
     {
       "id": "2026-11-14-rebirth",
       "tag": "update",
-      "title": "Havoc Rebirth: бета-лаунчер",
-      "body": "Новиapitestлаунчер з автопошуком гри, режимами Vanilla / Auto + Mods та встановленням MelonLoader в один клік.",
+      "title": "Havoc Rebirth: Launcher in beta",
+      "body": "New launcher, modes Vanilla / Auto + Mods and downloading MelonLoader in оne click.",
       "date": "2026-11-14",
       "pinned": true,
-      "link": "https://mwkdev.pp.ua/"
-    },
-    {
-      "id": "2026-11-10-patch",
-      "tag": "patch",
-      "title": "Патч 0.1.1",
-      "body": "Виправлено вильоти при старті з модами, покращено стабільність серверів.",
-      "date": "2026-11-10"
-    },
-    {
-      "id": "2026-11-05-event",
-      "tag": "event",
-      "title": "Вихідні тестування",
-      "body": "Приєднуйтесь до спільного тесту в Discord — стежте за анонсами.",
-      "date": "2026-11-05"
+      "link": "https://mwkdev.pp.ua/api"
     }
   ]
 }
